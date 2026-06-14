@@ -2,5 +2,6 @@ docs/
 web-ext-artifacts/
 node_modules/
 .amo-upload-uuid
+amo-metadata.json
 .DS_Store
 *.log
