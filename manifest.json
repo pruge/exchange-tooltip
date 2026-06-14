@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "AliExpress USD → KRW Hover",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "알리익스프레스에서 달러 가격에 마우스를 올리면 원화 환산 금액을 툴팁으로 보여줍니다.",
   "browser_specific_settings": {
     "gecko": {
@@ -13,8 +13,9 @@
     }
   },
   "icons": {
-    "48": "icons/icon.svg",
-    "96": "icons/icon.svg"
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png"
   },
   "content_scripts": [
     {
@@ -33,9 +34,9 @@
     "default_title": "USD → KRW Hover",
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "icons/icon.svg",
-      "32": "icons/icon.svg",
-      "48": "icons/icon.svg"
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png"
     }
   },
   "options_ui": {
