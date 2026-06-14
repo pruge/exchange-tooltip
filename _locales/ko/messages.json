@@ -1,0 +1,14 @@
+{
+  "extensionName": {
+    "message": "AliExpress USD → KRW 호버",
+    "description": "확장 이름"
+  },
+  "extensionDescription": {
+    "message": "알리익스프레스에서 달러 가격에 마우스를 올리면 원화 환산 금액을 툴팁으로 보여줍니다.",
+    "description": "확장 설명"
+  },
+  "actionTitle": {
+    "message": "USD → KRW 호버",
+    "description": "도구바 버튼 툴팁"
+  }
+}
