@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>USD → KRW Hover · 옵션</title>
+    <link rel="stylesheet" href="tooltip.css" />
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", sans-serif;
+        max-width: 480px;
+        margin: 0;
+        padding: 20px 24px;
+        background: #fafafa;
+        color: #1f1f1f;
+        line-height: 1.5;
+      }
+      h1 {
+        font-size: 16px;
+        margin: 0 0 16px;
+        font-weight: 600;
+      }
+      h2 {
+        font-size: 13px;
+        font-weight: 600;
+        color: #555;
+        margin: 20px 0 8px;
+      }
+
+      .option {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 12px;
+        background: #fff;
+        border: 1px solid #e5e5e5;
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+      .option input[type="checkbox"] {
+        margin-top: 3px;
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+      }
+      .option label {
+        cursor: pointer;
+        flex: 1;
+      }
+      .option .title {
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .option .desc {
+        font-size: 12px;
+        color: #666;
+        margin-top: 4px;
+      }
+
+      .theme-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .theme-card {
+        position: relative;
+        cursor: pointer;
+        padding: 10px;
+        background: #fff;
+        border: 1px solid #e5e5e5;
+        border-radius: 8px;
+        transition: border-color 100ms ease, box-shadow 100ms ease;
+      }
+      .theme-card:hover {
+        border-color: #cbd5e1;
+      }
+      .theme-card input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .theme-card.selected {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.18);
+      }
+      .theme-card .name {
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: 6px;
+        color: #333;
+      }
+      .swatch {
+        height: 38px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 13px;
+      }
+      .swatch--dark {
+        background: #18181b;
+        color: #fff;
+      }
+      .swatch--soft-dark {
+        background: #334155;
+        color: #f8fafc;
+      }
+      .swatch--blue {
+        background: #1e3a8a;
+        color: #fff;
+      }
+      .swatch--warm {
+        background: #d8cfbc;
+        color: #1c1917;
+        border: 1px solid #b8af9b;
+      }
+
+      .preview-wrap {
+        margin-top: 18px;
+        padding: 24px;
+        background: #f4f4f5;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 90px;
+      }
+      .preview-label {
+        font-size: 11px;
+        color: #888;
+        text-align: left;
+        margin-bottom: 6px;
+      }
+      /* 미리보기는 실제 툴팁 클래스 그대로 사용 — position만 static 으로 변경 */
+      .preview-wrap .usdkrw-tooltip {
+        position: static;
+        opacity: 1;
+        transform: none;
+      }
+
+      .status {
+        font-size: 12px;
+        color: #2e7d32;
+        margin-top: 10px;
+        height: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>USD → KRW Hover 옵션</h1>
+
+    <h2>표시 정보</h2>
+    <div class="option">
+      <input type="checkbox" id="showRateInfo" />
+      <label for="showRateInfo">
+        <div class="title">환율 정보 표시</div>
+        <div class="desc">툴팁 아래에 현재 환율(1 USD = N원)을 작게 표시합니다.</div>
+      </label>
+    </div>
+
+    <h2>테마</h2>
+    <div class="theme-grid">
+      <label class="theme-card" data-theme="dark">
+        <input type="radio" name="theme" value="dark" />
+        <div class="name">1. 다크 툴팁</div>
+        <div class="swatch swatch--dark">₩2,720</div>
+      </label>
+      <label class="theme-card" data-theme="soft-dark">
+        <input type="radio" name="theme" value="soft-dark" />
+        <div class="name">2. 소프트 다크</div>
+        <div class="swatch swatch--soft-dark">₩2,720</div>
+      </label>
+      <label class="theme-card" data-theme="blue">
+        <input type="radio" name="theme" value="blue" />
+        <div class="name">3. 블루 톤</div>
+        <div class="swatch swatch--blue">₩2,720</div>
+      </label>
+      <label class="theme-card" data-theme="warm">
+        <input type="radio" name="theme" value="warm" />
+        <div class="name">4. 웜 그레이</div>
+        <div class="swatch swatch--warm">₩2,720</div>
+      </label>
+    </div>
+
+    <div class="preview-label" style="margin-top:18px">미리보기</div>
+    <div class="preview-wrap">
+      <div class="usdkrw-tooltip" id="previewTooltip">
+        <div class="usdkrw-tooltip__main">₩2,720</div>
+        <div class="usdkrw-tooltip__sub" id="previewSub" style="display:none">1 USD = 1,388.50원</div>
+      </div>
+    </div>
+
+    <div class="status" id="status"></div>
+
+    <script src="options.js"></script>
+  </body>
+</html>

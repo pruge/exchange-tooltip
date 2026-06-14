@@ -1,0 +1,6 @@
+docs/
+web-ext-artifacts/
+node_modules/
+.amo-upload-uuid
+.DS_Store
+*.log
