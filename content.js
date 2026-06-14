@@ -1,5 +1,5 @@
 // 파싱 즉시 한 번 — 이게 안 찍히면 content script 자체가 주입되지 않은 것
-console.log("[USD→KRW] init v0.8.1 (PNG icons) — script parsed @", location.href);
+console.log("[USD→KRW] init v0.8.2 (min FF 140) — script parsed @", location.href);
 
 (() => {
   "use strict";
