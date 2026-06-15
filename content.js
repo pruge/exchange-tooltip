@@ -1,5 +1,5 @@
 // 파싱 즉시 한 번 — 이게 안 찍히면 content script 자체가 주입되지 않은 것
-console.log("[USD→KRW] init v0.8.3 (ko default + android 142) — script parsed @", location.href);
+console.log("[USD→KRW] init v0.8.4 (live USD re-parse) — script parsed @", location.href);
 
 (() => {
   "use strict";
@@ -212,6 +212,29 @@ console.log("[USD→KRW] init v0.8.3 (ko default + android 142) — script parse
     return node.closest(`.${PRICE_CLASS}`);
   }
 
+  // 호버 시점의 textContent 에서 USD 를 다시 파싱.
+  // 알리가 수량 변경 등으로 가격을 동적 업데이트 해도 정확한 값을 잡기 위함.
+  // 못 잡으면 스캔 때 저장한 dataset.usd 로 fallback.
+  const SINGLE_PRICE_REGEX = /(?:US\s*\$|USD\s*|\$)\s*(\d{1,3}(?:[,\s]\d{3})*(?:\.\d+)?|\d+(?:\.\d+)?)/i;
+  function readLiveUsd(el) {
+    const txt = el.textContent;
+    if (txt) {
+      const m = txt.match(WHOLE_PRICE_REGEX) || txt.match(SINGLE_PRICE_REGEX);
+      if (m) {
+        const live = parseAmount(m[1]);
+        if (live !== null) {
+          if (el.dataset.usd !== String(live)) {
+            el.dataset.usd = String(live);
+            log("dataset.usd refreshed", live);
+          }
+          return live;
+        }
+      }
+    }
+    const cached = parseFloat(el.dataset.usd);
+    return Number.isFinite(cached) ? cached : null;
+  }
+
   function handleMouseMove(event) {
     mouseX = event.clientX;
     mouseY = event.clientY;
@@ -223,8 +246,8 @@ console.log("[USD→KRW] init v0.8.3 (ko default + android 142) — script parse
   function handleHover(event) {
     const el = findPriceTarget(event.target);
     if (!el) return;
-    const usd = parseFloat(el.dataset.usd);
-    if (!Number.isFinite(usd)) return;
+    const usd = readLiveUsd(el);
+    if (usd === null) return;
 
     // hover 진입 시점의 마우스 위치 캡처
     mouseX = event.clientX;
