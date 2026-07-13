@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>USD → KRW</title>
+    <title>환율 → 원화</title>
     <link rel="stylesheet" href="tooltip.css" />
     <style>
       body {
@@ -126,9 +126,45 @@
       .footer a:hover {
         text-decoration: underline;
       }
+
+      .site-section {
+        padding-bottom: 12px;
+        border-bottom: 1px solid #ececec;
+      }
+      .site-toggle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #1f1f1f;
+        cursor: pointer;
+      }
+      .site-toggle input {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+      }
+      .site-toggle input:disabled {
+        cursor: default;
+      }
+      .site-domain {
+        font-size: 11px;
+        color: #888;
+        margin: 4px 0 0 24px;
+        min-height: 13px;
+      }
     </style>
   </head>
   <body>
+    <div class="section site-section">
+      <label class="site-toggle">
+        <input type="checkbox" id="siteToggle" />
+        <span>이 사이트에서 가격 변환 표시</span>
+      </label>
+      <div class="site-domain" id="siteDomain"></div>
+    </div>
+
     <div class="section">
       <h2>현재 환율</h2>
       <div id="rate" class="rate">조회 중…</div>
@@ -166,6 +202,8 @@
       <a id="openOptions">자세한 옵션 →</a>
     </div>
 
+    <script src="rates.js"></script>
+    <script src="sites.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>
