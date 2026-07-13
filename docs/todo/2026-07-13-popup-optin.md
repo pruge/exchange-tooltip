@@ -1,6 +1,7 @@
 ---
 title: 팝업 per-site 토글 + 옵션 동적화 + manifest 권한
-status: pending
+status: in_progress
+sprint: wire-multicurrency
 area: extension
 priority: high
 source: spec-decompose

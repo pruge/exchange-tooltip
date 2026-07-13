@@ -1,6 +1,7 @@
 ---
 title: content.js 다통화 일반화 + per-site 게이트
-status: pending
+status: in_progress
+sprint: wire-multicurrency
 area: extension
 priority: high
 source: spec-decompose
