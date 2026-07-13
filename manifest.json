@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
-  "version": "0.8.5",
+  "version": "0.9.0",
   "description": "__MSG_extensionDescription__",
   "default_locale": "ko",
   "browser_specific_settings": {
@@ -23,12 +23,9 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "*://*.aliexpress.com/*",
-        "*://*.aliexpress.us/*"
-      ],
+      "matches": ["<all_urls>"],
       "all_frames": true,
-      "js": ["content.js"],
+      "js": ["currency.js", "rates.js", "sites.js", "content.js"],
       "css": ["tooltip.css"],
       "run_at": "document_idle"
     }
@@ -50,8 +47,7 @@
   },
   "permissions": [
     "storage",
-    "*://*.aliexpress.com/*",
-    "*://*.aliexpress.us/*",
-    "*://open.er-api.com/*"
+    "activeTab",
+    "<all_urls>"
   ]
 }

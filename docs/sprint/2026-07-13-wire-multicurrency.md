@@ -50,7 +50,27 @@ related_sprints: [2026-07-13-shared-core]
 - ⚠️ all_urls → AMO 재심사 유발(ADR-0001) — description 권한 문구는 branding sprint 담당.
 
 ## 사용자 테스트
-> 생성 시 비움. `/cling:worktree` 개발 완료 보고 시 `/cling:notify --all` 로 채움.
+**변경 컴포넌트**: extension (user-runs — claude 가 Firefox 를 띄우지 않음).
+
+**실행** (둘 중 하나):
+```
+# A) Firefox 임시 로드: about:debugging#/runtime/this-firefox
+#    → "임시 부가 기능 로드" → 이 worktree 의 manifest.json 선택
+# B) npx web-ext run   (dev Firefox 자동 기동 + 라이브 리로드)
+```
+
+**✅ 가시 확인** (완료 기준 매핑):
+- ☐ **회귀·시드** — `aliexpress.com` 상품페이지: USD 가격 점선 밑줄 + 호버 시 원화 툴팁(기존 동작). 팝업 열면 "이 사이트에서 가격 변환 표시" 이미 체크·도메인 `aliexpress.com`.
+- ☐ **per-site 활성(라이브)** — 임의 사이트(환율/해외쇼핑 페이지): 처음엔 밑줄 없음 → 툴바 아이콘 클릭 → 팝업 체크 → **리로드 없이** 가격 밑줄·호버 환산 시작.
+- ☐ **다통화** — `€`·`£`·`¥`·ISO코드(`EUR 10`·`10 SGD`)가 각각 원화로 환산. showRateInfo ON 시 rate 라인이 `1 EUR = N원`처럼 소스통화 반영.
+- ☐ **KRW skip** — `₩` 가격은 밑줄/툴팁 없음.
+- ☐ **라이브 비활성** — 활성 사이트에서 팝업 체크 해제 → 호버 툴팁 안 뜸(리로드 후 밑줄도 사라짐).
+- ☐ **서브도메인** — aliexpress 켠 상태에서 `m.aliexpress.com` 등 서브도메인도 동작.
+- ☐ **미허용 inert** — 안 켠 사이트: 콘솔에 "content script loaded" 는 찍히되 "가격 발견" 로그 0.
+- ☐ **팝업 환율** — 팝업에 `1 USD = N원` + 업데이트 시각, 새로고침 동작.
+- ☐ **비지원 페이지** — `about:`/파일 페이지에서 팝업: 체크박스 비활성 + "이 페이지에선 사용할 수 없어요".
+
+> 검증(개발자, 완료): `web-ext lint` 0/0/0 · 전 JS `node --check` OK · manifest 유효 JSON · 공유모듈 node 41/41(shared-core).
 
 ## 관련 todo / spec
 - [content-generalize](../todo/2026-07-13-content-generalize.md) — content.js 다통화 + 게이트
