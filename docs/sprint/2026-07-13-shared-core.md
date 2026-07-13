@@ -45,7 +45,12 @@ related_sprints: []
 - 전체 회귀: 이 sprint 는 신규 모듈만 추가(기존 content.js 미변경) → 기존 aliexpress USD 호버 동작 무영향(회귀 리스크 0). lint green 이 회귀 게이트.
 
 ## 사용자 테스트
-> 비움 — `/cling:worktree` 개발 완료 보고 시 `/cling:notify --all` 로 채움.
+**사용자 가시 테스트 없음** — shared-core 는 아직 manifest 에 미배선된 순수 모듈이다(다음 sprint 의 content/popup 이 소비하며 배선). 브라우저에서 확인할 동작 변화 없음.
+
+검증(개발자):
+- `npx web-ext lint` → errors 0 · warnings 0 · notices 0.
+- node 단위 검증 41/41 통과 — detectCurrency($→USD·¥→JPY·€·£·₩·R$·ISO코드·미지·오탐), interpret(prefix/suffix·inline 다중·whole 앵커), convertToKRW(교차환산·미지원 null), formatKRW, sites(currentDomain·isEnabled 서픽스·시드·부분서픽스 배제).
+- 회귀: 기존 `content.js` 미변경 → aliexpress USD 호버 동작 무영향.
 
 ## 관련 todo / spec
 - [2026-07-13-shared-core](../todo/2026-07-13-shared-core.md) — 공유 모듈 3종
