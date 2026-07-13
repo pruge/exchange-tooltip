@@ -1,4 +1,4 @@
-docs/
+docs/_memo/
 web-ext-artifacts/
 node_modules/
 .amo-upload-uuid
