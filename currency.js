@@ -36,9 +36,11 @@ var CurrencyKit = (() => {
       "XOF XPF YER ZAR ZMW ZWL").split(" ")
   );
 
-  // 금액 패턴: 천단위 구분자 그룹은 최소 1개(+) 요구 — 그래야 구분자 없는 "5000" 이
-  // "500" 으로 잘리지 않고 둘째 대안 \d+ 로 온전히 매칭된다. 소수점 옵션.
-  const NUM = "\\d{1,3}(?:[,\\s]\\d{3})+(?:\\.\\d+)?|\\d+(?:\\.\\d+)?";
+  // 금액 패턴: 미국식(1,234.56)·유럽식(1.234,56·512,00) 모두 캡처.
+  // 구분자(. , 공백)로 천단위 그룹(정확히 3자리, +로 최소 1개) → 소수부(., 1~2자리) 옵션,
+  // 또는 그룹 없는 정수 + 소수부(. 또는 ,). 실제 소수/천단위 판별은 parseAmount 가 함.
+  // 천단위 그룹에 + 요구 → 구분자 없는 "5000" 이 "500" 으로 잘리지 않고 둘째 대안으로.
+  const NUM = "\\d{1,3}(?:[.,\\s]\\d{3})+(?:[.,]\\d{1,2})?|\\d+(?:[.,]\\d+)?";
 
   // 심볼 대안(정규식 source, 이미 이스케이프됨). 다글자(US$·R$) 먼저.
   const SYM = ["US\\s*\\$", "R\\$", "\\$", "€", "£", "¥", "₩", "₹", "₽", "₺", "฿", "₫", "₴", "₪"];
@@ -70,9 +72,34 @@ var CurrencyKit = (() => {
     return null;
   }
 
+  // 단일 구분자 해석: "512,00"→소수(1~2자리) vs "1,234"→천단위(3자리).
+  function resolveSingle(s, sep) {
+    const parts = s.split(sep);
+    if (parts.length === 2 && parts[1].length <= 2 && parts[0].length >= 1) {
+      return parts[0] + "." + parts[1]; // 소수 구분자
+    }
+    return parts.join(""); // 천단위 → 제거
+  }
+
+  // 미국식(1,234.56)·유럽식(1.234,56·512,00) 금액 문자열 → number.
   function parseAmount(raw) {
-    const cleaned = String(raw).replace(/[,\s]/g, "");
-    const n = parseFloat(cleaned);
+    let s = String(raw).replace(/\s/g, ""); // nbsp 포함 공백 제거
+    if (!s) return null;
+    const hasDot = s.includes(".");
+    const hasComma = s.includes(",");
+    if (hasDot && hasComma) {
+      // 마지막에 오는 구분자가 소수점.
+      if (s.lastIndexOf(",") > s.lastIndexOf(".")) {
+        s = s.replace(/\./g, "").replace(/,/g, "."); // 유럽식: 콤마=소수
+      } else {
+        s = s.replace(/,/g, ""); // 미국식: 점=소수
+      }
+    } else if (hasComma) {
+      s = resolveSingle(s, ",");
+    } else if (hasDot) {
+      s = resolveSingle(s, ".");
+    }
+    const n = parseFloat(s);
     return Number.isFinite(n) && n > 0 ? n : null;
   }
 
