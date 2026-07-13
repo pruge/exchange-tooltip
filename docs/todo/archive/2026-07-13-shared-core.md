@@ -1,6 +1,7 @@
 ---
 title: 공유 순수 모듈 3종 (currency / rates / sites)
-status: in_progress
+status: done
+completedAt: 2026-07-13
 sprint: shared-core
 area: extension
 priority: high
