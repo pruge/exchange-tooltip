@@ -1,6 +1,7 @@
 ---
 title: 팝업 per-site 토글 + 옵션 동적화 + manifest 권한
-status: in_progress
+status: done
+completedAt: 2026-07-13
 sprint: wire-multicurrency
 area: extension
 priority: high

@@ -1,6 +1,7 @@
 ---
 title: content.js 다통화 일반화 + per-site 게이트
-status: in_progress
+status: done
+completedAt: 2026-07-13
 sprint: wire-multicurrency
 area: extension
 priority: high

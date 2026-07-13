@@ -1,11 +1,12 @@
 ---
 created: 2026-07-13
-status: in_progress
+status: done
 priority: high
 kind: bundle
 todos: [2026-07-13-content-generalize, 2026-07-13-popup-optin]
 worktree: wire-multicurrency
 startedAt: 2026-07-13
+endedAt: 2026-07-13
 related_sprints: [2026-07-13-shared-core]
 ---
 
