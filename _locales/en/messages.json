@@ -1,14 +1,14 @@
 {
   "extensionName": {
-    "message": "AliExpress USD → KRW Hover",
+    "message": "Currency → KRW Hover",
     "description": "Extension name"
   },
   "extensionDescription": {
-    "message": "Hover any USD price on AliExpress to instantly see the Korean Won equivalent in a tooltip.",
+    "message": "Hover any currency price on the sites you enable to instantly see the Korean Won equivalent in a tooltip. It runs only on the sites you turn on.",
     "description": "Extension description"
   },
   "actionTitle": {
-    "message": "USD → KRW Hover",
+    "message": "Currency → KRW Hover",
     "description": "Toolbar button title"
   }
 }
