@@ -67,7 +67,7 @@ npx web-ext sign --channel=listed --amo-metadata=amo-metadata.json --ignore-file
 | 0.9.1 | unlisted | 유럽식 숫자(`512,00 €` · `1.234,56`) 파싱 — 콤마=소수/천단위 자동 판별 |
 | 0.9.2 | unlisted | `USD $` 코드+심볼 결합 토큰 감지(WMC 등 통화 스위처 사이트) |
 | **0.9.3** | **listed** | 위 전부 반영해 공개 스토어 제출 |
-| 0.9.4 | (미정) | 이름 변경 → "원화 환산 — 환율 호버" (EN "KRW Converter — Hover Any Price"). gecko id 불변 |
+| 0.9.4 | listed | 이름 변경 → "원화 환산 — 환율 호버" (EN "KRW Converter — Hover Any Price"). gecko id 불변. 공개 스토어 재제출 |
 
 ## 참고
 - 자체설치 서명 XPI 는 `web-ext-artifacts/`(gitignore)에 버전별 누적.
