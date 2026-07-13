@@ -1,6 +1,6 @@
 {
   "extensionName": {
-    "message": "Currency → KRW Hover",
+    "message": "KRW Converter — Hover Any Price",
     "description": "Extension name"
   },
   "extensionDescription": {
@@ -8,7 +8,7 @@
     "description": "Extension description"
   },
   "actionTitle": {
-    "message": "Currency → KRW Hover",
+    "message": "KRW Converter",
     "description": "Toolbar button title"
   }
 }

@@ -1,6 +1,6 @@
 {
   "extensionName": {
-    "message": "환율 호버 → 원화",
+    "message": "원화 환산 — 환율 호버",
     "description": "확장 이름"
   },
   "extensionDescription": {
@@ -8,7 +8,7 @@
     "description": "확장 설명"
   },
   "actionTitle": {
-    "message": "환율 → 원화 호버",
+    "message": "원화 환산 호버",
     "description": "도구바 버튼 툴팁"
   }
 }
