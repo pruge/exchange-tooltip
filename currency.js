@@ -48,7 +48,8 @@ var CurrencyKit = (() => {
 
   // ISO 코드 경계: prefix 는 앞 경계만(그래야 "EUR12" 도 잡히고 "EUROPE 12" 는 안 잡힘),
   // suffix 는 뒤 경계만(그래야 "12EUR" 잡히고 "12 EURO" 는 안 잡힘). i 플래그 금지(대문자 코드만).
-  const PRE_TOKEN = `(?:${symAlt}|\\b[A-Z]{3})`;
+  // prefix: ISO코드(+선택적 심볼, 예 "USD $")  또는  심볼. 코드는 앞 경계만(→ "EUR12" 도 잡힘).
+  const PRE_TOKEN = `(?:\\b[A-Z]{3}(?:\\s*(?:${symAlt}))?|${symAlt})`;
   const SUF_TOKEN = `(?:${symAlt}|[A-Z]{3}\\b)`;
   const PREFIX = `(${PRE_TOKEN})\\s*(${NUM})`; // g1=token, g2=amount
   const SUFFIX = `(${NUM})\\s*(${SUF_TOKEN})`; // g3=amount, g4=token
@@ -65,10 +66,11 @@ var CurrencyKit = (() => {
 
   function detectCurrency(token) {
     if (!token) return null;
-    const t = token.replace(/\s+/g, ""); // "US $" → "US$"
-    if (SYMBOL_TO_CURRENCY[t]) return SYMBOL_TO_CURRENCY[t];
-    const up = t.toUpperCase();
-    if (/^[A-Z]{3}$/.test(up) && KNOWN_CODES.has(up)) return up;
+    const t = token.replace(/\s+/g, ""); // "USD $" → "USD$", "US $" → "US$"
+    if (SYMBOL_TO_CURRENCY[t]) return SYMBOL_TO_CURRENCY[t]; // "US$"·"$"·"€"·"R$"…
+    // 코드+심볼 혼합("USD$")이거나 순수 코드("EUR") → ISO 코드 우선.
+    const code = t.match(/[A-Z]{3}/);
+    if (code && KNOWN_CODES.has(code[0])) return code[0];
     return null;
   }
 
